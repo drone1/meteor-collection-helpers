@@ -6,13 +6,13 @@ Mongo.Collection.prototype.helpers = function(helpers) {
       self._name + "' a transform function already exists!");
 
   if (! self._helpers) {
-    self._helpers = function Document(doc) { return _.extend(this, doc); };
+    self._helpers = function Document(doc) { return Object.assign(this, doc); };
     self._transform = function(doc) {
       return new self._helpers(doc);
     };
   }
 
-  _.each(helpers, function(helper, key) {
+  Object.keys(helpers).forEach(function(helper, key) {
     self._helpers.prototype[key] = helper;
   });
 };
